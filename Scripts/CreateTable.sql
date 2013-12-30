@@ -1,0 +1,4 @@
+CREATE TABLE dbt_master.dbt_account (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  data VARCHAR(100)
+);
