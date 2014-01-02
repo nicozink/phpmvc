@@ -1,4 +1,6 @@
 <?php
+  include("src/route/Route.php");
+  
   echo "Server: ".$_SERVER["REQUEST_URI"]."<br>";
   echo "Script: ".$_SERVER["SCRIPT_NAME"]."<br>";
   echo "<br>";
@@ -14,22 +16,10 @@
     }
   }
   
-  $command = array_values($requestURI);
+  $commands = array_values($requestURI);
 
-  switch ($command[0])
-  {
-    case "commandOne" :
-    echo "You entered command: ".$command[0]."<br>";
-    break;
-
-    case "commandTwo" :
-    echo "You entered command: ".$command[0]."<br>";
-    break;
-
-    default:
-    echo "That command does not exist: ".print_r($command)."<br>";
-    break;
-  }
+  $route = new Route();
+  $route->Call($commands);
 
   // Create connection
   $con = mysqli_connect("localhost", "dbt_user", "dbt_password", "dbt_master");
