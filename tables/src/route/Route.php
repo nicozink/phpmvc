@@ -33,19 +33,64 @@ class Route
       echo "That command does not exist: ".print_r($commands)."<br>";
       break;
     }
-    /*$functionToCall = $command->getFunction();
     
-    if($command->getFunction() == "")
+    if(count($commands) > 1 && $this->isController($commands[0]))
+    {
+      $controllerName = $commands[0];
+    }
+    else
+    {
+      $controllerName = "Error";
+    }
+    
+    include($this->_GetControllerPath($controllerName));
+    
+    $className = $controllerName."Controller";
+    
+    $controller = new $className();
+    
+    $functionToCall = $commands[1];
+    
+    if(count($commands))
+    {
+      $functionToCall = $commands[1];
+    }
+    else
     {
       $functionToCall = "_Default";
     }
 
-    if(!is_callable(array(&$this, $functionToCall)))
+    if(!is_callable(array(&$controller, $functionToCall)))
     {
       $functionToCall = "_Error";
     }
 
-    call_user_func(array(&$this, $functionToCall));*/
+    call_user_func(array(&$controller, $functionToCall));
+  }
+  
+  //
+  // Private Methods
+  //
+  
+  // Creates the path of a component given the component name.
+  // @param controllerName The name of the controller.
+  function _GetControllerPath($controllerName)
+  {
+    return "src/mvc/controller/".$controllerName.".php";
+  }
+  
+  // Checks whether a component using the provided name exists.
+  // @param controllerName The name of the controller.
+  function _IsController($controllerName)
+  {
+    if($this->_GetControllerPath($controllerName))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 }
 ?>
