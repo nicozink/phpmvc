@@ -15,14 +15,16 @@ class Controller
   // Private Methods
   //
   
-  function _Default()
+  // Generates an index view for the base controller.
+  function Index()
   {
-    echo "This is the default method.";
+    echo "A default index method is not available.";
   }
   
-  function _Error()
+  // Generates an error view for the base controller.
+  function Error()
   {
-    echo "This is an error.";
+    echo "An error has occurred loading a controller method.";
   }
 }
 ?>
