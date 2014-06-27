@@ -1,4 +1,4 @@
 phpmvc
 ======
 
-A basic php routing project which accepts urls and calls the relevant mvc controller.
+A simple php url routing project which accepts urls and routes them to the requested MVC controller.
