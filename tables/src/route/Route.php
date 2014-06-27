@@ -21,11 +21,18 @@ class Route
   // @param command The command.
   function Call(&$commands)
   {
+    // We keep track of where to start indexing parameters.
+    // Anything before that is considered to be part of the
+    // MVC structure.
+    $paramIndex = 0;
+    
     if(count($commands) >= 1)
     {
       if ($this->IsController($commands[0]))
       {
         $controllerName = $commands[0];
+        
+        $paramIndex = 1;
       }
       else
       {
@@ -46,6 +53,15 @@ class Route
     if(count($commands) >= 2)
     {
       $functionToCall = $commands[1];
+      
+      if(!is_callable(array(&$controller, $functionToCall)))
+      {
+        $functionToCall = Config::$DefaultControllerMethod;
+      }
+      else
+      {
+        $paramIndex = 2;
+      }
     }
     else
     {
@@ -57,7 +73,13 @@ class Route
       $functionToCall = "Error";
     }
 
-    call_user_func(array(&$controller, $functionToCall));
+    $arguments = array();
+    for ($i = $paramIndex; $i < count($commands); $i++) 
+    {
+      $arguments[$i - $paramIndex] = $commands[$i];
+    }
+
+    call_user_func_array(array(&$controller, $functionToCall), $arguments);
   }
   
   //

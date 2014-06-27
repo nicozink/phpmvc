@@ -1,4 +1,4 @@
-tables
+phpmvc
 ======
 
-A website to manage tables of data.
+A basic php routing and mvc project.
